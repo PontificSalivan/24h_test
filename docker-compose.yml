@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    depends_on:
+      - db
+    environment:
+      - TIME_RESTART=60
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=matches
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+  db:
+    image: postgres:13.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=matches
+
+volumes:
+  postgres_data:
